@@ -3,7 +3,7 @@ const sendEmail = async (data) => {
   let transporter = nodeMailer.createTransport({
     service: "gmail",
     auth: {
-      user: "sugam",
+      user: "sugamrautbim@gamil.com",
       pass: "zaihwyzmqnywoqev",
     },
   });
