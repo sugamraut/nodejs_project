@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ask Question</title>
+    <style>
+      .body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7f9;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      form {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+      }
+
+      form p {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      input[type="text"],
+      input[type="file"],
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+      }
+
+      textarea {
+        resize: vertical;
+        font-size: 16px;
+      }
+
+      input[type="submit"] {
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+    </style>
+    <link rel="stylesheet" href="/navbar.css" />
+  </head>
+  <body>
+    <%-include("../components/navbar")%>
+    <div class="body">
+      <div class="container">
+        <form action="/askquestion" method="post" enctype="multipart/form-data">
+          <p style="color: red"><%-error%></p>
+          <input type="text" name="title" placeholder="Enter the title" />
+          <input type="file" name="image" />
+          <textarea
+            name="description"
+            placeholder="Describe your question here..."
+            cols="40"
+            rows="10"
+          ></textarea>
+          <input type="submit" value="Ask Question" />
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

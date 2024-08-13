@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OTP page</title>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <%-include("../components/navbar")%>
+    <form action="/verifyOtp/<%-email%>" method="post">
+      <p style="color: red"><%-error%></p>
+      <input type="text" name="Otp" />
+
+      <input type="submit" value="Enter 4 digits OTP" />
+    </form>
+  </body>
+</html>

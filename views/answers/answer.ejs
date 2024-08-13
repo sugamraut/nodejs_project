@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Answer</title>
+    <style>
+      .body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #e9ecef;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 600px;
+        margin-top: 80px; /* Adjust based on navbar height */
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .container h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333333;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 8px;
+        color: #333333;
+      }
+
+      .form-group textarea {
+        width: 100%;
+        height: 150px;
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        padding: 12px;
+        font-size: 16px;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-group textarea:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      .form-group button {
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .form-group button:hover {
+        background-color: #0056b3;
+      }
+
+      .form-group button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+    </style>
+    <link rel="stylesheet" href="/navbar.css" />
+  </head>
+  <body>
+    <!-- Include the Navbar -->
+    <%-include("../components/navbar")%>
+    <!-- Adjust the path to where your navbar.ejs file is located -->
+    <div class="body">
+      <div class="container">
+        <h1>Edit Your Answer</h1>
+        <form action="/answer/edit/<%-answerId%>/<%-questionId%>" method="post">
+          <div class="form-group">
+            <label for="editdata">Your Answer:</label>
+            <textarea id="editdata" name="editdata" required></textarea>
+          </div>
+          <div class="form-group">
+            <button type="submit">Update Answer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

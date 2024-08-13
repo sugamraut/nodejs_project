@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inquisitive</title>
+    <style>
+      .body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7f9;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .card {
+        background-color: #ffffff;
+        width: 100%;
+        max-width: 800px;
+        margin: 20px 0;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        transition: box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .card h2 {
+        margin-top: 0;
+        color: #333;
+      }
+
+      .card p {
+        margin: 10px 0 0;
+        color: #555;
+      }
+
+      .card img {
+        max-width: 100%;
+        border-radius: 8px;
+        margin-top: 10px;
+      }
+
+      .answer {
+        width: 100%;
+        max-width: 800px;
+      }
+
+      .answer .card {
+        margin-top: 20px;
+      }
+
+      .answerSection {
+        margin-top: 40px;
+        width: 100%;
+        max-width: 800px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .answerSection form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .answerSection textarea {
+        width: 100%;
+        height: 150px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        box-sizing: border-box;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .answerSection button {
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .answerSection button:hover {
+        background-color: #0056b3;
+      }
+
+      .answerSection a {
+        display: block;
+        margin-top: 10px;
+        color: #007bff;
+        text-decoration: none;
+        font-size: 16px;
+      }
+
+      .answerSection a:hover {
+        text-decoration: underline;
+      }
+    </style>
+    <link rel="stylesheet" href="/navbar.css" />
+  </head>
+  <body>
+    <%-include("../components/navbar")%>
+    <div class="body">
+      <div class="container">
+        <h1>Questions:</h1>
+        <div class="card">
+          <h2><%-data[0].title%></h2>
+          <p><%-data[0].description%></p>
+          <img src="<%-data[0].image%>" alt="question image" /><br />
+          <i>Author: <%-data[0].userInfo.userName%></i><br />
+          <p>
+            Created At: <%-new Date(data[0].createdAt).toLocaleDateString()%>
+          </p>
+        </div>
+        <h1>Answers:</h1>
+        <div class="answer">
+          <%answers.forEach((data1) => { %>
+          <div class="card">
+            <p><%-data1.answerText%></p>
+            <i>Author: <%-data1.userInfo.userName%></i><br />
+            <p>
+              Replied At: <%-new Date(data1.createdAt).toLocaleDateString()%>
+            </p>
+            <button onclick="handleLikes(<%=data1.id%>)">Likes</button>
+            <span id="likeCount_<%-data1.id%>"><%-data1.likes%></span>
+            <% if (data1.userInfoId === userId) { %>
+            <a href="/answer/edit/<%-data1.id%>/<%-data[0].id%>">Edit</a>
+            <a href="/answer/delete/<%-data1.id%>/<%-data[0].id%>">Delete</a>
+            <% } %>
+          </div>
+          <% }) %>
+        </div>
+
+        <div class="answerSection">
+          <form action="/answer/<%-data[0].id%>" method="post">
+            <textarea
+              name="answer"
+              placeholder="Write your answer here..."
+              required
+            ></textarea>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      const cookie = document.cookie.split("=");
+      function handleLikes(id) {
+        socket.emit("likes", {
+          id,
+          cookie: cookie[1],
+        });
+      }
+      socket.on("likeUpdate", ({ likesCount, id }) => {
+        const elem = document.getElementById(`likeCount_${id}`);
+        elem.textContent = likesCount;
+      });
+    </script>
+  </body>
+</html>

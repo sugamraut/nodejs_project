@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inquisitive</title>
+    <style>
+      .body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7f9;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .card {
+        background-color: #ffffff;
+        width: 100%;
+        max-width: 600px;
+        margin: 20px 0;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+      }
+
+      .card:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        transform: scale(1.02);
+      }
+
+      .card img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+      }
+
+      .card h2 {
+        margin-top: 0;
+        font-size: 24px;
+        color: #333;
+      }
+
+      .card p {
+        margin: 10px 0;
+        font-size: 16px;
+        color: #555;
+      }
+
+      .card i {
+        color: #007bff;
+      }
+    </style>
+    <link rel="stylesheet" href="/navbar.css" />
+  </head>
+  <body>
+    <%-include("./components/navbar.ejs")%>
+    <div class="body">
+      <div class="container">
+        <% data.forEach((item) => { %>
+        <div
+          class="card"
+          onclick="window.location.href='/question/<%-item.id%>'"
+        >
+          <% if (item.image) { %>
+          <img src="<%-item.image%>" alt="Question image" />
+          <% } %>
+          <h2><%-item.title %></h2>
+          <p>Author: <i><%-item.userInfo.userName %></i></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </body>
+</html>
